@@ -37,7 +37,7 @@ function gameLoop(firstrun) {
     }
     
     //draw the snake
-    ctx.fillStyle = ctx.strokeStyle = "#FFF";
+    ctx.fillStyle = ctx.strokeStyle = "#CCC";
     ctx.fillRect(Snake.x * squareSize, Snake.y * squareSize, squareSize, squareSize);
     for (i = 0; i < Snake.nodes.length; i++) {
         ctx.fillRect(Snake.nodes[i][0] * squareSize, Snake.nodes[i][1] * squareSize, squareSize, squareSize);
