@@ -4,7 +4,7 @@ var canvas = document.getElementById("game"),
 
 var gridWidth = 30,
     gridHeight = 20,
-    squareSize = 16; //pixel width and height of one square in the game grid
+    squareSize = 12; //pixel width and height of one square in the game grid
 
 var gameSpeed = document.getElementById("speed").value;
 
@@ -19,7 +19,7 @@ canvas.addEventListener("blur", function() {
 });
 
 ctx.clearCanvas = function() {
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "#444";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
