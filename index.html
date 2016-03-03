@@ -7,15 +7,31 @@
     <style type="text/css">
     #game{
         border:1px solid #000;
+        display:block;
+        margin:50px auto 0px;
+        outline:none;
+    }
+    
+    body{
+        background-color:#555;
+    }
+    
+    div{
+        margin-top:30px;
+        font-size:20px;
+        text-align:center;
+        color:#AAA;
+        font-family:Verdana;
     }
     </style>
     
 </head>
 <body>
 
-    Speed:
-    <br/><input type="range" value=7 min=1 max=10 id="speed" />
-    <br/><br/>
+    <div>
+        Speed:<br/>
+        <input type="range" value=7 min=1 max=10 id="speed" />
+    </div>
     
     <canvas id="game" tabindex=0>
         Your browser does not support the HTML5 Canvas element. Try a modern browser.
