@@ -1,15 +1,20 @@
 
-gameLoop();
+gameLoop(true);
 
 var turnedThisFrame = false; //used to disallow turning twice in one frame
 
-function gameLoop() {
+function gameLoop(firstrun) {
     
     turnedThisFrame = false;
     
     ctx.clearCanvas(); //defined in setup.js
     
     if (Snake.moving) {
+        Snake.nodes.unshift([Snake.x, Snake.y]); //create a new node
+        
+        while (Snake.nodes.length > Snake.curlen) //delete oldest nodes
+            Snake.nodes.pop();
+        
         switch (Snake.dir) {
             case 37: //left
                 Snake.x--;
@@ -34,6 +39,23 @@ function gameLoop() {
     ctx.fillRect(Snake.x * squareSize, Snake.y * squareSize, squareSize, squareSize);
     for (i = 0; i < Snake.nodes.length; i++) {
         ctx.fillRect(Snake.nodes[i][0] * squareSize, Snake.nodes[i][1] * squareSize, squareSize, squareSize);
+        if (Snake.nodes[i][0] == Snake.x && Snake.nodes[i][1] == Snake.y) {
+            Snake.moving = false;
+            ctx.fillText("Game over (space to restart)", canvas.width / 2, canvas.height / 2);
+            break;
+        }
+    }
+    
+    //collision detection
+    if (Snake.x > gridWidth || Snake.x < 0 || Snake.y > gridHeight || Snake.y < 0) {
+        Snake.moving = false;
+        ctx.fillText("Game over (space to restart)", canvas.width / 2, canvas.height / 2);
+    }
+    
+    //print instructions if on setup
+    if (firstrun) {
+        ctx.textAlign = "center";
+        ctx.fillText("Space to start", canvas.width / 2, canvas.height / 2);
     }
     
     if (Snake.moving) setTimeout(gameLoop, 50);
