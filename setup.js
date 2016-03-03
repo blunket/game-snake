@@ -22,10 +22,10 @@ ctx.clearCanvas = function() {
 }
 
 var Snake = {
-    moving : true,
+    moving : false,
     x : 1, //x and y position of the snake in terms of the game grid
     y : 1,
-    nodes : [] //2-D array (will store [x, y] in terms of game grid of each node)
+    dir : 39, //initial direction: right
+    nodes : [], //2-D array (will store [x, y] in terms of game grid of each node)
+    curlen : 0 //current length
 }
-
-gameLoop(); //defined in game.js
