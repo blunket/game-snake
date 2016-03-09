@@ -8,6 +8,8 @@ var gridWidth = 30,
 
 var gameSpeed = document.getElementById("speed").value;
 
+var score = 0;
+
 //calculate pixel width and height of the canvas
 canvas.width = gridWidth * squareSize;
 canvas.height = gridHeight * squareSize;
@@ -25,8 +27,7 @@ ctx.clearCanvas = function() {
 
 var Food = {
     x : Math.floor(Math.random() * gridWidth),
-    y : Math.floor(Math.random() * gridHeight),
-    type : "normal"
+    y : Math.floor(Math.random() * gridHeight)
 }
 
 Food.init = function() {
@@ -41,9 +42,6 @@ Food.init = function() {
             }
         }
     } while ((this.x == Snake.x && this.y == Snake.y) || onSnake) //try again if the food spawned on the snake
-    this.type = Math.random() > .9
-                ? "special"
-                : "normal";
 }
 
 var Snake = {
@@ -52,7 +50,8 @@ var Snake = {
     y : 1,
     dir : 39, //initial direction: right
     nodes : [], //2-D array (will store [x, y] in terms of game grid of each node)
-    curlen : 0 //current length
+    curlen : 0, //current length
+    initialized : true
 }
 
 Snake.init = function() {
@@ -62,4 +61,8 @@ Snake.init = function() {
     this.dir = 39;
     this.nodes = [];
     this.curlen = 0;
+    this.initialized = true;
+    score = 0;
+    Food.init();
 }
+
