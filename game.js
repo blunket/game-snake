@@ -83,19 +83,19 @@ function gameLoop(firstrun) {
         ctx.fillStyle = "rgba(0,0,0,.4)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "#FFF";
-        ctx.font = "32px Verdana";
+        ctx.font = "20px Verdana";
         ctx.fillText("Space to start", canvas.width / 2, canvas.height / 2);
     }
     
     if (Snake.moving) {
-        setTimeout(gameLoop, 130 - gameSpeed * 5);
+        setTimeout(gameLoop, 220 - gameSpeed * 7);
     } else {
         if (Snake.initialized && !firstrun) {       //if still playing, draw pause screen
             ctx.textAlign = "center";
             ctx.fillStyle = "rgba(0,0,0,.4)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#FFF";
-            ctx.font = "32px Verdana";
+            ctx.font = "20px Verdana";
             ctx.fillText("paused", canvas.width / 2, canvas.height / 2);
         }
     }
@@ -130,6 +130,6 @@ function doGameOver() {
     ctx.fillStyle = "rgba(0,0,0,.4)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#FFF";
-    ctx.font = "32px Verdana";
+    ctx.font = "20px Verdana";
     ctx.fillText("Game over (press space)", canvas.width / 2, canvas.height / 2);
 }
