@@ -5,38 +5,87 @@
     <title>Snake Game</title>
     
     <style type="text/css">
+    *{
+        box-sizing:border-box;
+    }
+    
     #game{
         border:1px solid #000;
         display:block;
-        margin:50px auto 0px;
+        position:absolute;
+        left:260px;
+        top:10px;
         outline:none;
     }
     
-    body{
-        background-color:#555;
+    #options{
+        position:absolute;
+        width:250px;
+        top:0px;
+        left:0px;
+        bottom:0px;
+        background-color:#4D3A34;
+        font-family:Monospace;
+        font-size:20px;
+        color:#AAA;
+        padding:10px;
     }
     
-    div{
-        margin-top:30px;
-        font-size:20px;
-        text-align:center;
-        color:#AAA;
-        font-family:Verdana;
+    span{
+        display:block;
+        margin:30px auto;
     }
+    
+    input[type=button]{
+        width:100%;
+        height:40px;
+    }
+    
+    input[type=color]{
+        width:0px;
+        height:0px;
+        visibility:hidden;
+    }
+    
+    #snakecolor, #bgcolor{
+        width:20px;
+        height:20px;
+        display:inline-block;
+    }
+    
+    #snakecolor{
+        background-color:#d4c4a3;
+    }
+    
+    #bgcolor{
+        background-color:#bb7754;
+    }
+    
+    body{
+        background-color:#3c2923;
+        margin:0px;
+        padding:0px;
+    }
+    
     </style>
     
 </head>
 <body>
-
-    <div>
-        Speed:<br/>
-        <input type="range" value=7 min=1 max=10 id="speed" />
+    <div id="options">
+        <span>&nbsp;Speed: <input type="range" value=7 min=1 max=20 id="speed" /></span>
+        <span>&nbsp;Width: <input type="range" value=30 min=10 max=70 id="width" /></span>
+        <span>Height: <input type="range" value=20 min=10 max=50 id="height" /></span>
+        <span><label><input type="checkbox" id="special" /> Special food</label></span>
+        <span><input type="button" id="apply" value="Apply" /></span>
+        <span>Controls: arrow keys</span>
+        <span>Spacebar to pause</span>
+        <span>Snake: <label id="snakecolor"><input type="color" value="#d4c4a3" id="snake" /></label></span>
+        <span>Background: <label id="bgcolor"><input type="color" value="#bb7754" id="bg" /></label></span>
     </div>
-    
     <canvas id="game" tabindex=0>
         Your browser does not support the HTML5 Canvas element. Try a modern browser.
     </canvas>
-    
+
     <script src="setup.js"></script>
     <script src="game.js" defer></script>
 </body>
