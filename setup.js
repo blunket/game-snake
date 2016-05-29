@@ -4,18 +4,20 @@ var canvas = document.getElementById("game"),
 
 var gridWidth = 30,
     gridHeight = 20,
-    squareSize = 32, //pixel width and height of one square in the game grid
+    //Math.min returns the lowest number among all options
+    //This line maximizes the size of the game without adding scrollbars
+    squareSize = Math.min((window.innerWidth - 270) / gridWidth, (window.innerHeight - 20) / gridHeight);
     special = false;
     
 var gameSpeed = document.getElementById("speed").value;
 
 document.getElementById("snake").addEventListener("change", function() {
     document.getElementById("snakecolor").style.backgroundColor = document.getElementById("snake").value
-})
+});
 
 document.getElementById("bg").addEventListener("change", function() {
     document.getElementById("bgcolor").style.backgroundColor = document.getElementById("bg").value
-})
+});
 
 document.getElementById("apply").addEventListener("click", function() {
     gameSpeed = parseInt(document.getElementById("speed").value);
@@ -23,8 +25,6 @@ document.getElementById("apply").addEventListener("click", function() {
     gridHeight = parseInt(document.getElementById("height").value);
     special = document.getElementById("special").checked;
     
-    //Math.min returns the lowest number among all options
-    //This line maximizes the size of the game without adding scrollbars
     squareSize = Math.min((window.innerWidth - 270) / gridWidth, (window.innerHeight - 20) / gridHeight);
     
     canvas.width = gridWidth * squareSize;
