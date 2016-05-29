@@ -4,9 +4,35 @@ var canvas = document.getElementById("game"),
 
 var gridWidth = 30,
     gridHeight = 20,
-    squareSize = 12; //pixel width and height of one square in the game grid
-
+    squareSize = 32, //pixel width and height of one square in the game grid
+    special = false;
+    
 var gameSpeed = document.getElementById("speed").value;
+
+document.getElementById("snake").addEventListener("change", function() {
+    document.getElementById("snakecolor").style.backgroundColor = document.getElementById("snake").value
+})
+
+document.getElementById("bg").addEventListener("change", function() {
+    document.getElementById("bgcolor").style.backgroundColor = document.getElementById("bg").value
+})
+
+document.getElementById("apply").addEventListener("click", function() {
+    gameSpeed = parseInt(document.getElementById("speed").value);
+    gridWidth = parseInt(document.getElementById("width").value);
+    gridHeight = parseInt(document.getElementById("height").value);
+    special = document.getElementById("special").checked;
+    
+    //Math.min returns the lowest number among all options
+    //This line maximizes the size of the game without adding scrollbars
+    squareSize = Math.min((window.innerWidth - 270) / gridWidth, (window.innerHeight - 20) / gridHeight);
+    
+    canvas.width = gridWidth * squareSize;
+    canvas.height = gridHeight * squareSize;
+    doGameOver();
+    Snake.init();
+    gameLoop(true);
+});
 
 var score = 0;
 
@@ -21,13 +47,14 @@ canvas.addEventListener("blur", function() {
 });
 
 ctx.clearCanvas = function() {
-    ctx.fillStyle = "#444";
+    ctx.fillStyle = document.getElementById("bg").value;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 var Food = {
     x : Math.floor(Math.random() * gridWidth),
-    y : Math.floor(Math.random() * gridHeight)
+    y : Math.floor(Math.random() * gridHeight),
+    type : 0 //type 0 is normal, 1 is special
 }
 
 Food.init = function() {
@@ -42,6 +69,7 @@ Food.init = function() {
             }
         }
     } while ((this.x == Snake.x && this.y == Snake.y) || onSnake) //try again if the food spawned on the snake
+    this.type = special ? Math.round(Math.random() - .4) : 0; //if special food is on, small chance of spawning special; otherwise, always spawn normal food
 }
 
 var Snake = {
