@@ -5,8 +5,6 @@ var turnedThisFrame = false; //used to disallow turning twice in one frame
 
 function gameLoop(firstrun) {
     
-    gameSpeed = parseInt(document.getElementById("speed").value);
-    
     turnedThisFrame = false;
     
     ctx.clearCanvas(); //defined in setup.js
@@ -37,7 +35,7 @@ function gameLoop(firstrun) {
     }
     
     //draw the snake
-    ctx.fillStyle = "#CCC";
+    ctx.fillStyle = document.getElementById("snake").value;
     ctx.fillRect(Snake.x * squareSize, Snake.y * squareSize, squareSize, squareSize);
     onSnake = false; //temporary variable
     for (i = 0; i < Snake.nodes.length; i++) {
@@ -50,20 +48,33 @@ function gameLoop(firstrun) {
     if (onSnake) doGameOver();
     
     //draw pellet, but smaller
-    ctx.fillRect(Food.x * squareSize + (.25 * squareSize), Food.y * squareSize + (.25 * squareSize), squareSize / 2, squareSize / 2);
+    if (Food.type == 1) {
+        ctx.strokeStyle = document.getElementById("snake").value;
+        ctx.strokeRect(Food.x * squareSize + (.25 * squareSize), Food.y * squareSize + (.25 * squareSize), squareSize / 2, squareSize / 2);
+    } else {
+        ctx.fillStyle = document.getElementById("snake").value;
+        ctx.fillRect(Food.x * squareSize + (.25 * squareSize), Food.y * squareSize + (.25 * squareSize), squareSize / 2, squareSize / 2);
+    }
     
     //print score
     ctx.textAlign = "left";
     ctx.fillStyle = "#FFF";
-    ctx.fillText("Score: " + score, 10, canvas.height - 10);
+    ctx.font = "12px Consolas";
+    ctx.fillText("Length: " + (Snake.curlen + 1), 10, canvas.height - 25);
+    ctx.fillText(" Score: " + score, 10, canvas.height - 10);
     
     //collision detection
     if (Snake.x >= gridWidth || Snake.x < 0 || Snake.y >= gridHeight || Snake.y < 0) {
         doGameOver();
     } else if (Snake.x == Food.x && Snake.y == Food.y) {
-        Snake.curlen++;
+        if (Food.type == 0) {
+            Snake.curlen++;
+        } else {
+            Snake.curlen = Math.round(Snake.curlen * (3 / 4));
+            score += 10;
+        }
         Food.init();
-        score += 10 + gameSpeed;
+        score += parseInt(gameSpeed);
     }
     
     //print instructions if on setup
@@ -72,6 +83,7 @@ function gameLoop(firstrun) {
         ctx.fillStyle = "rgba(0,0,0,.4)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "#FFF";
+        ctx.font = "32px Verdana";
         ctx.fillText("Space to start", canvas.width / 2, canvas.height / 2);
     }
     
@@ -83,7 +95,8 @@ function gameLoop(firstrun) {
             ctx.fillStyle = "rgba(0,0,0,.4)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#FFF";
-            ctx.fillText("Game paused (space to unpause)", canvas.width / 2, canvas.height / 2);
+            ctx.font = "32px Verdana";
+            ctx.fillText("paused", canvas.width / 2, canvas.height / 2);
         }
     }
 }
@@ -117,5 +130,6 @@ function doGameOver() {
     ctx.fillStyle = "rgba(0,0,0,.4)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#FFF";
-    ctx.fillText("Game over (space to restart)", canvas.width / 2, canvas.height / 2);
+    ctx.font = "32px Verdana";
+    ctx.fillText("Game over (press space)", canvas.width / 2, canvas.height / 2);
 }
